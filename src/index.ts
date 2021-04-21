@@ -1,12 +1,15 @@
-import express from 'express'
+const express = require('express')
 require('dotenv').config();
 //Crear el servidor
 const app = express(); 
 
 // console.log(process.env)
 
-//Directorio publivo
-app.use( express.static('public') );
+//Directorio publico
+app.use(express.static('public'));
+
+// Lectura y parseo del body
+app.use(express.json());
 
 //Rutas
 app.use('/api/auth', require('./routes/auth'));

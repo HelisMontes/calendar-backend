@@ -2,12 +2,17 @@
  * Rutas de Usuarios / Auth
  * hots + /api/auth
  */
-import {Router} from 'express'
+
+const { Router } = require('express')
+
+const { addUser, loginUser, revalidateToken } = require('../controllers/auth');
+
 const router = Router();
 
-router.get('/', (req, res) => { 
-  console.log('Se requiere /');
-  res.json({ ok: true })
-});
+router.get('/renew', revalidateToken );
+
+router.post('/', loginUser);
+
+router.post('/new', addUser);
 
 module.exports = router
