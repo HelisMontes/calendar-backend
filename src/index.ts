@@ -8,11 +8,8 @@ const app = express();
 //Directorio publivo
 app.use( express.static('public') );
 
-// //Rutas
-// app.get('/', (req, res) => { 
-//   console.log('Se requiere /');
-//   res.json({ ok: true })
-// });
+//Rutas
+app.use('/api/auth', require('./routes/auth'));
 
 // Escuchar peticiones
 app.listen(process.env.PORT, () => {
