@@ -5,6 +5,7 @@
 
 import {Router} from 'express'
 import {check} from 'express-validator';
+import { validarCampos } from '../middlewares/validar-campos';
 
 import { addUser, loginUser, revalidateToken } from '../controllers/auth';
 
@@ -16,7 +17,8 @@ router.post(
   '/',
   [
     check('email', 'El e-mail es obligatorio').isEmail(),
-    check('password', 'El password debe contener mínimo 6 caracteres').isLength({min: 6})
+    check('password', 'El password debe contener mínimo 6 caracteres').isLength({min: 6}),
+    validarCampos
   ], loginUser);
 
 router.post(
@@ -24,8 +26,9 @@ router.post(
   [
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('email', 'El e-mail es obligatorio').isEmail(),
-    check('password', 'El password debe contener mínimo 6 caracteres').isLength({min: 6})
+    check('password', 'El password debe contener mínimo 6 caracteres').isLength({min: 6}),
+    validarCampos
   ],
-  addUser );
+  addUser);
 
 module.exports = router

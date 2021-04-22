@@ -1,16 +1,7 @@
-import express from 'express'
-import { validationResult } from 'express-validator';
+import express from 'express';
 
 export const addUser = (req: express.Request, res: express.Response): object => {
   const {name, email, password} = req.body;
-
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    return res.status(401).json({
-      ok: false,
-      msg: errors.mapped()
-    });
-  }
   return res.json({ 
     ok: true,
     msg: 'new',
@@ -21,14 +12,6 @@ export const addUser = (req: express.Request, res: express.Response): object => 
 }
 export const loginUser = (req: express.Request, res: express.Response) :object => {
   const {email, password } = req.body;
-  // Manejo de errores
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    return res.status(401).json({
-      ok: false,
-      msg: errors.mapped()
-    });
-  }
   return res.json({
     ok: true,
     msg: 'login',
