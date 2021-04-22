@@ -1,14 +1,17 @@
-const {response} = require('express')
+import express from 'express'
+import { validationResult } from 'express-validator';
 
-export const addUser = (req, res = response) => {
+export const addUser = (req: express.Request, res: express.Response): object => {
   const {name, email, password} = req.body;
-  if(name.length < 5){
-    return res.json({
+
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    return res.status(401).json({
       ok: false,
-      msg: 'El nombre debe ser mayor a 5 caracteres'
-    })
+      msg: errors.mapped()
+    });
   }
-  res.json({ 
+  return res.json({ 
     ok: true,
     msg: 'new',
     name,
@@ -16,9 +19,17 @@ export const addUser = (req, res = response) => {
     password
   });
 }
-export const loginUser = (req, res = response)=>{
+export const loginUser = (req: express.Request, res: express.Response) :object => {
   const {email, password } = req.body;
-  res.json({
+  // Manejo de errores
+  const errors = validationResult(req)
+  if(!errors.isEmpty()){
+    return res.status(401).json({
+      ok: false,
+      msg: errors.mapped()
+    });
+  }
+  return res.json({
     ok: true,
     msg: 'login',
     email,
@@ -26,8 +37,8 @@ export const loginUser = (req, res = response)=>{
   });
 } 
 
-export const revalidateToken = (req, res = response)=>{
-  res.json({
+export const revalidateToken = (req: express.Request, res: express.Response) :object => {
+  return res.json({
     ok: true,
     msg: 'reNew'
   });
