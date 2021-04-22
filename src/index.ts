@@ -1,8 +1,12 @@
-import express from 'express'
+import express from 'express';
+import {dbConnection} from './database/config';
 
 require('dotenv').config();
 //Crear el servidor
 const app = express(); 
+
+//Base de datos
+dbConnection()
 
 // console.log(process.env)
 

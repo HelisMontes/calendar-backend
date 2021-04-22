@@ -2,7 +2,7 @@ import express from 'express';
 
 export const addUser = (req: express.Request, res: express.Response): object => {
   const {name, email, password} = req.body;
-  return res.json({ 
+  return res.status(201).json({ 
     ok: true,
     msg: 'new',
     name,
@@ -12,7 +12,7 @@ export const addUser = (req: express.Request, res: express.Response): object => 
 }
 export const loginUser = (req: express.Request, res: express.Response) :object => {
   const {email, password } = req.body;
-  return res.json({
+  return res.status(201).json({
     ok: true,
     msg: 'login',
     email,
