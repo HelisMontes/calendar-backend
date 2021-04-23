@@ -2,13 +2,21 @@ import express from 'express';
 import Usuario from '../models/Usuarios'
 
 export const addUser = async(req: express.Request, res: express.Response) => {
-  //const {name, email, password} = req.body;
+  const {email, password} = req.body;
   try {
-    const user = new Usuario(req.body);
+    let user:any = await Usuario.findOne({email});
+      if(user){
+        return res.status(400).json({
+          ok: false,
+          msg: `El email ${email} esta siendo usado por otro usuario`
+        });
+      }
+    user = new Usuario(req.body);
     await user.save()
     return res.status(201).json({ 
       ok: true,
-      msg: 'new',
+      uid: user._id,
+      name: user.name
     });
     
   } catch (error) {
