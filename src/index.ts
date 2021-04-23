@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import {dbConnection} from './database/config';
 
 require('dotenv').config();
@@ -7,6 +8,9 @@ const app = express();
 
 //Base de datos
 dbConnection();
+
+//CORS
+app.use(cors());
 
 // console.log(process.env)
 

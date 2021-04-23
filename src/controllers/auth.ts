@@ -1,7 +1,7 @@
 import express from 'express';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt';
 import Usuario from '../models/Usuarios';
-import {generarJWT} from '../helpers/jwt'
+import {generarJWT} from '../helpers/jwt';
 
 export const addUser = async(req: express.Request, res: express.Response) => {
   const {email, password} = req.body;
