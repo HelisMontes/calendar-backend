@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express(); 
 
 //Base de datos
-dbConnection()
+dbConnection();
 
 // console.log(process.env)
 
