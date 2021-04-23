@@ -5,7 +5,7 @@ import Usuario from '../models/Usuarios';
 export const addUser = async(req: express.Request, res: express.Response) => {
   const {email, password} = req.body;
   try {
-    let user:any = await Usuario.findOne({email});
+    let user: user | any = await Usuario.findOne({email});
       if(user){
         return res.status(400).json({
           ok: false,
@@ -25,20 +25,44 @@ export const addUser = async(req: express.Request, res: express.Response) => {
     });
   } catch (error) {
     console.log(error)
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       msg: 'Por favor comunicarse con el administrador'
     })
   }
 }
-export const loginUser = (req: express.Request, res: express.Response) :object => {
+export const loginUser = async(req: express.Request, res: express.Response) => {
   const {email, password } = req.body;
-  return res.status(201).json({
-    ok: true,
-    msg: 'login',
-    email,
-    password
-  });
+  try {
+    const user: user | any = await Usuario.findOne ({email});
+      if(!user){
+        return res.status(400).json({
+          ok: false,
+          msg: `Este usuario no existe`
+        });
+      }
+    //Confirmar los password
+    const validatePassword:boolean = bcrypt.compareSync(password, user.password)
+    if (!validatePassword) {
+      return res.status(400).json({
+        ok: false,
+        msg: `El password es incorrecto`
+      });
+    }
+    //Generar JWT
+
+    return res.json({
+      ok: true,
+      uid: user._id,
+      name: user.name
+    });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      ok: false,
+      msg: 'Por favor comunicarse con el administrador'
+    })
+  }
 } 
 
 export const revalidateToken = (req: express.Request, res: express.Response) :object => {
@@ -47,6 +71,12 @@ export const revalidateToken = (req: express.Request, res: express.Response) :ob
     msg: 'reNew'
   });
 } 
+interface user{
+  name: string,
+  email: string,
+  password: string,
+  _id: string
+}
 
 module.exports = {
   addUser,
