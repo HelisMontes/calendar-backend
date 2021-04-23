@@ -1,5 +1,6 @@
 import express from 'express';
-import Usuario from '../models/Usuarios'
+import bcrypt from 'bcrypt'
+import Usuario from '../models/Usuarios';
 
 export const addUser = async(req: express.Request, res: express.Response) => {
   const {email, password} = req.body;
@@ -12,13 +13,16 @@ export const addUser = async(req: express.Request, res: express.Response) => {
         });
       }
     user = new Usuario(req.body);
-    await user.save()
+    //Encriptar password
+    const salt:string = bcrypt.genSaltSync(10);
+    user.password = bcrypt.hashSync(password, salt);
+    
+    await user.save();
     return res.status(201).json({ 
       ok: true,
       uid: user._id,
       name: user.name
     });
-    
   } catch (error) {
     console.log(error)
     res.status(500).json({
