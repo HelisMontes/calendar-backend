@@ -8,10 +8,11 @@ import {check} from 'express-validator';
 import { validarCampos } from '../middlewares/validar-campos';
 
 import { addUser, loginUser, revalidateToken } from '../controllers/auth';
+import { validarToken } from '../middlewares/validar-jwt';
 
 const router = Router();
 
-router.get('/renew', revalidateToken );
+router.get('/renew', validarToken ,revalidateToken );
 
 router.post(
   '/',

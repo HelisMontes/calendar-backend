@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 
 const generarJWT = (uid: string, name: string) => {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ const generarJWT = (uid: string, name: string) => {
         console.log(err)
         reject('No se pudo generar el token');
       }
-      resolve(token)
+      resolve(token);
     });
   });
 }
