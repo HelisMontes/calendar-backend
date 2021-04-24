@@ -72,12 +72,35 @@ const updateEvent = async(req: express.Request, res: express.Response ) =>{
   }
   
 }
-const deleteEvent = (req: express.Request, res: express.Response ) =>{
-  console.log(req.params);
-  return res.status(201).json({
-    ok: true,
-    msg: 'deleteEventos'
-  });
+const deleteEvent = async(req: express.Request, res: express.Response ) =>{
+  const user_id = req.body.user_id;
+  const eventId = req.params.id;
+  try {
+    const event:any = await Events.findById(eventId);
+    if (!event) {
+      return res.status(404).json({
+        ok: true,
+        msg: 'Este evento no existe'
+      });
+    }
+    if(event.user_id.toString() !== user_id){
+      return res.status(401).json({
+        ok: true,
+        msg: 'No cuenta con los privilegios para realizar esta acción'
+      });
+    }
+    await Events.findByIdAndDelete(eventId)
+    return res.status(201).json({
+      ok:true,
+      msg: 'Accion realizada exitosamente'
+    });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      ok: true,
+      msg: 'Por favor comunicarse con el administrador'
+    });
+  }
 }
 
 export {
