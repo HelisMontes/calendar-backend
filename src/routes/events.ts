@@ -37,4 +37,4 @@ events.put(
   updateEvent);
 events.delete('/:id', deleteEvent);
 
-module.exports = events 
+export default events 

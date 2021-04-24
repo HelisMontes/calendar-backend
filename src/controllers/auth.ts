@@ -3,10 +3,10 @@ import bcrypt from 'bcrypt';
 import Usuario from '../models/Usuarios';
 import {generarJWT} from '../helpers/jwt';
 
-export const addUser = async(req: express.Request, res: express.Response) => {
+const addUser = async(req: express.Request, res: express.Response) => {
   const {email, password} = req.body;
   try {
-    let user: user | any = await Usuario.findOne({email});
+    let user: any = await Usuario.findOne({email});
       if(user){
         return res.status(400).json({
           ok: false,
@@ -37,10 +37,10 @@ export const addUser = async(req: express.Request, res: express.Response) => {
     })
   }
 }
-export const loginUser = async(req: express.Request, res: express.Response) => {
+const loginUser = async(req: express.Request, res: express.Response) => {
   const {email, password } = req.body;
   try {
-    const user: user | any = await Usuario.findOne ({email});
+    const user: any = await Usuario.findOne ({email});
       if(!user){
         return res.status(400).json({
           ok: false,
@@ -73,7 +73,7 @@ export const loginUser = async(req: express.Request, res: express.Response) => {
   }
 } 
 
-export const revalidateToken = async(req: express.Request, res: express.Response) => {
+const revalidateToken = async(req: express.Request, res: express.Response) => {
   const {user_id, name} = req.body
   
   //Generar JWT
@@ -84,14 +84,8 @@ export const revalidateToken = async(req: express.Request, res: express.Response
     token
   });
 } 
-interface user{
-  name: string,
-  email: string,
-  password: string,
-  _id: string
-}
 
-module.exports = {
+export {
   addUser,
   loginUser,
   revalidateToken

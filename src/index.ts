@@ -1,28 +1,31 @@
 import express from 'express';
+import dotenv from "dotenv";
 import cors from 'cors';
 import {dbConnection} from './database/config';
+import auth from './routes/auth'
+import events from './routes/events'
 
-require('dotenv').config();
-//Crear el servidor
-const app = express(); 
+dotenv.config();
+// Crear el servidor
+const app = express();
 
-//Base de datos
+// Base de datos
 dbConnection();
 
-//CORS
+// CORS
 app.use(cors());
 
 // console.log(process.env)
 
-//Directorio publico
+// Directorio publico
 app.use(express.static('public'));
 
 // Lectura y parseo del body
 app.use(express.json());
 
-//Rutas
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/events', require('./routes/events'));
+// Rutas
+app.use('/api/auth', auth);
+app.use('/api/events', events);
 
 // Escuchar peticiones
 app.listen(process.env.PORT, () => {

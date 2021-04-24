@@ -1,9 +1,9 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 
-const validarToken = (req: express.Request, res: express.Response, next) => {
+const validarToken = (req: express.Request, res: express.Response, next: any) => {
   // Headers x-token
-  const token:string = req.header('x-token');
+  const token:any = req.header('x-token');
   if(!token){
     res.status(401).json({
       ok: false,
@@ -23,14 +23,6 @@ const validarToken = (req: express.Request, res: express.Response, next) => {
 
 
 
-  next()
+  next();
 }
 export {validarToken}
-
-
-// interface payload {
-//   uid: string,
-//   name: string,
-//   iat: number,
-//   exp: number
-// }

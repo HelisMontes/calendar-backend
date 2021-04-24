@@ -32,4 +32,4 @@ router.post(
   ],
   addUser);
 
-module.exports = router
+export default router

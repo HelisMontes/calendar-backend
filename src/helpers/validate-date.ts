@@ -1,10 +1,11 @@
 import moment from 'moment';
 
+type req = { req: any }
 const isDate = (value: Date) => {
   if(!value) return false;
   return moment(value).isValid() ? true : false;
 }
-const isDateEnd = (value : Date, {req}) => {
+const isDateEnd = (value : Date, {req}:req) => {
   //console.log(req.body)
   if(!value) return false;
   if(!moment(value).isValid()) return false
