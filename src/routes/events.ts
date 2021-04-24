@@ -26,7 +26,15 @@ events.post(
     validarCampos
   ],
   createEvent);
-events.put('/:id', updateEvent);
+events.put(
+  '/:id', 
+  [
+    check('title', 'El titulo es requerido').not().isEmpty(),
+    check('start', 'La fecha inicial es requerida').custom(isDate),
+    check('end', 'La fecha final es requerida').custom(isDateEnd),
+    validarCampos
+  ],
+  updateEvent);
 events.delete('/:id', deleteEvent);
 
 module.exports = events 
