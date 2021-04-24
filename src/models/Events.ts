@@ -4,23 +4,28 @@ import { model, Schema } from "mongoose"
 const EventSchema = new Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   note: {
     type: String,
   },
   start: {
     type: Date,
-    require: true,
+    required: true,
   },
   end: {
     type: Date,
-    require: true,
+    required: true,
   },
-  user: {
+  user_id: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario'
+    ref: 'Usuario',
+    required: true,
   }
 });
-
+EventSchema.method('toJSON', function () {
+  const {__v, _id, ...object} = this.toObject();
+  object.id = _id;
+  return object;
+});
 export default model('Events', EventSchema);

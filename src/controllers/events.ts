@@ -7,8 +7,23 @@ const getEvents = (req: express.Request, res: express.Response ) => {
     msg: 'getEventos'
   });
 }
-const createEvent = (req: express.Request, res: express.Response ) => {
-  // console.log(req.body)  
+const createEvent = async(req: express.Request, res: express.Response ) => {
+  //console.log(req.body)
+  const events = new Events(req.body);
+  try {
+    const eventsSave = await events.save();
+    return res.status(201).json({
+      ok: true,
+      event: eventsSave
+    });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      ok: true,
+      msg: 'Por favor comunicarse con el administrador'
+    });
+  }
+
   return res.status(201).json({
     ok: true,
     msg: 'createEventos'

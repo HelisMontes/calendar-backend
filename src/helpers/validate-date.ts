@@ -15,6 +15,6 @@ const isDateEnd = (value : Date, {req}) => {
    * Validamos que la fecha final no sea menor o igual a la inicial
    * y debe haber una diferencia de 15 minutos entre fechas
    */
-    return moment(dateEnd).isSameOrBefore(dateStart) ? false : true;
+  return moment(dateEnd).isSameOrBefore(dateStart) ? false : true;
 }
 export { isDate, isDateEnd };

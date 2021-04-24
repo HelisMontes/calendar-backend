@@ -74,10 +74,10 @@ export const loginUser = async(req: express.Request, res: express.Response) => {
 } 
 
 export const revalidateToken = async(req: express.Request, res: express.Response) => {
-  const {uid, name} = req.body
+  const {user_id, name} = req.body
   
   //Generar JWT
-  const token = await generarJWT(uid, name);
+  const token = await generarJWT(user_id, name);
   
   return res.json({
     ok: true,

@@ -12,7 +12,7 @@ const validarToken = (req: express.Request, res: express.Response, next) => {
   }
   try {
     const payload:any = jwt.verify(token, process.env.KEY_JWT);
-    req.body.uid = payload.uid
+    req.body.user_id = payload.uid
     req.body.name = payload.name
   } catch (error) {
     res.status(401).json({
