@@ -2,12 +2,13 @@
   "name": "calendar-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "run-p -l type-check:watch start:dev",
+    "start": "node dist/index.js",
+    "dev": "run-p -l type-check:watch start:dev",
     "type-check:watch": "npm run type-check -- --watch",
     "type-check": "tsc --noEmit",
-    "start:dev": "nodemon --exec babel-node --extensions \".ts\" src/index.ts",
+    "start:dev": "nodemon --exec babel-node --extensions \".ts\" dist/index.js",
     "clean": "rimraf dist",
     "build:prod": "npm run clean && babel src -d dist --ignore=\"./src/**/*.spec.ts\" --extensions \".ts\"",
     "build": "run-p -l type-check build:prod"
