@@ -1,11 +1,24 @@
 import express from 'express';
 import Events from '../models/Events'
 
-const getEvents = (req: express.Request, res: express.Response ) => {
+const getEvents = async(req: express.Request, res: express.Response ) => {
+ try {
+  const listEvents = await Events
+    .find()
+    .populate('user_id', 'name');
+  
   return res.status(201).json({
     ok: true,
-    msg: 'getEventos'
+    events: listEvents 
   });
+   
+ } catch (error) {
+  console.log(error)
+  return res.status(500).json({
+    ok: true,
+    msg: 'Por favor comunicarse con el administrador'
+  });
+ }
 }
 const createEvent = async(req: express.Request, res: express.Response ) => {
   //console.log(req.body)
